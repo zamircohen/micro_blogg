@@ -12,6 +12,9 @@ app.get("/", (req, res) => {
     res.sendFile("./index.html", { root: STATIC_ROOT })
 })
 
+app.get("/create", (req, res) => {
+    res.sendFile("./create.html", { root: STATIC_ROOT })
+})
 
 
 app.listen(PORT, () => {
