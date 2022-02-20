@@ -1,5 +1,5 @@
-<html>
-    <body>
+<%- include("partials/header.ejs") %>
+
         <h1>Create new account</h1>
         <form action="/index" method="POST">
             <input type="text" name="firstname" placeholder="First name"><br/>
@@ -12,5 +12,5 @@
             <p>Fields with * are required</p>
             <button type="submit">Create</button>
         </form>
-    </body>
-</html>
+    
+<%- include("partials/footer.ejs") %>

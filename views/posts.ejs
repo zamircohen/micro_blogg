@@ -1,0 +1,22 @@
+<%- include("partials/header.ejs") %>
+
+        <h1>Critter Posts</h1>
+
+        <form action="/submit" method="POST">
+            <input type="text" name="item" placeholder="What to do?">
+            <button type="submit">To do</button>
+        </form>
+
+        <h1>My Crits</h1>
+
+        <ul>
+            <% post_items.forEach((item) => { %>
+            <li> 
+                <%= item %> 
+            </li>
+            <% }) %>
+        </ul>
+
+        
+  
+<%- include("partials/footer.ejs") %>
