@@ -2,12 +2,15 @@ const express = require("express")
 const multer = require("multer")
 const path = require("path")
 const bodyParser = require("body-parser")
+const cookierParser = require("cookie-parser")
 
 const app = express()
 const PORT = 3000
 const VIEWS_ROOT = path.join(__dirname, "views")
 
 app.use(bodyParser.urlencoded({extended: true}))
+app.use(cookierParser())
+
 
 const POSTS = []
 
