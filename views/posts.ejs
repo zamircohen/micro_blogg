@@ -3,7 +3,7 @@
         <h1>Critter Posts</h1>
 
         <form action="/submit" method="POST">
-            <input type="text" name="item" placeholder="What to do?">
+            <input type="text" name="post_text" maxlength="140" placeholder="What to do?">
             <button type="submit">To do</button>
         </form>
 
@@ -12,11 +12,15 @@
         <ul>
             <% post_items.forEach((item) => { %>
             <li> 
-                <%= item %> 
+                <%= item.post_text%> posted on <%= item.date %>
             </li>
             <% }) %>
         </ul>
 
-        
-  
+
+        <form action="/delete" method="POST">
+            <button type="submit">Delete last post</button>
+        </form>
+
+
 <%- include("partials/footer.ejs") %>

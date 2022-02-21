@@ -34,9 +34,17 @@ app.get("/update", (req, res) => {
 
 
 app.post("/submit", (req, res) => {
-    const { item } = req.body   
-    POSTS.push(item)
+    const { post_text } = req.body   
+    const today_date = new Date();
+    const date = `${today_date.toLocaleDateString()} at ${today_date.toLocaleTimeString()}`
+    POSTS.push({ post_text, date })
+    console.log(POSTS)
     res.redirect("/posts")
+})
+
+app.post("/delete", (req, res) => {
+    POSTS.pop()
+    res.redirect("/")
 })
 
 
