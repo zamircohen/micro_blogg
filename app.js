@@ -33,7 +33,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 
 // Program variables
-const POSTS = []
+let POSTS = []
 const upload_photo = multer({dest: "user_photo" })
 
 
@@ -42,17 +42,25 @@ app.get("/login", (req, res) => {
     res.render("./login.ejs")
 })
 
-app.get("/posts", (req, res) => {
-    res.render("./posts.ejs")
-})
+// app.get("/posts", (req, res) => {
+//     res.render("./posts.ejs")
+// })
 
 app.get("/signup", (req, res) => {
     res.render("./signup.ejs")
 })
 
 app.get("/update", (req, res) => {
-    res.render("./update.ejs", {root: VIEWS_ROOT })
+    res.render("./update.ejs")
 })
+
+app.get("/posts", (req, res) => {
+    if (req.user) {
+        res.render("./posts.ejs", {username: req.user.username, POSTS});
+    } else {
+        res.redirect("/login");
+    }
+});
 
 
 // CREATE NEW USER
@@ -67,21 +75,29 @@ app.post("/signup", async (req, res) => {
 
 // **************************************
 
+// The main page
+
+app.post("/login", passport.authenticate("local", {
+    successRedirect: "/posts"
+}))
+
+
 
 // Create & submit a critter post
-app.post("/submit", (req, res) => {
+app.post("/posts", (req, res) => {
     const { post_text } = req.body   
     const today_date = new Date();
     const date = `${today_date.toLocaleDateString()} at ${today_date.toLocaleTimeString()}`
     POSTS.push({ post_text, date })
-    console.log(POSTS)
+    // console.log(POSTS)
     res.redirect("/posts")
 })
+
 
 // Delete the last post
 app.post("/delete", (req, res) => {
     POSTS.pop()
-    res.redirect("/")
+    res.redirect("/posts")
 })
 
 

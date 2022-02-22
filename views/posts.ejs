@@ -2,7 +2,9 @@
 
         <h1>Critter Posts</h1>
 
-        <form action="/submit" method="POST">
+        <p> You are logged in as: <b><%= username %> </p> </b>
+
+        <form method="POST">
             <input type="text" name="post_text" maxlength="140" placeholder="What to do?">
             <button type="submit">To do</button>
         </form>
@@ -10,9 +12,9 @@
         <h1>My Crits</h1>
 
         <ul>
-            <% post_items.forEach((item) => { %>
+            <% POSTS.forEach((item) => { %>
             <li> 
-                <%= item.post_text%> posted on <%= item.date %>
+                <%= item.post_text%> <i><small>- posted on <%= item.date %> </small></i>
             </li>
             <% }) %>
         </ul>

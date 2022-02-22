@@ -3,13 +3,13 @@
         <h1>Critter - Make some noise </h1>
         <br/>
         <h2>Log in</h2>
-        <form action="/account" method="POST">
+        <form method="POST">
             <input type="text" name="username" placeholder="Username" required>
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Log in</button>
         </form>
         <br/>
 
-        <h2>or create a new account <a href="/create">here</a></h2>
+        <h2>or create a new account <a href="/signup">here</a></h2>
 
 <%- include("partials/footer.ejs") %>
