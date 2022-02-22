@@ -58,9 +58,9 @@ app.get("/signup", (req, res) => {
     res.render("./signup.ejs")
 })
 
-app.get("/update", (req, res) => {
-    res.render("./update.ejs")
-})
+// app.get("/update", (req, res) => {
+//     res.render("./update.ejs")
+// })
 
 app.get("/index", (req, res) => {
     if (req.user) {
@@ -71,7 +71,12 @@ app.get("/index", (req, res) => {
 })
 
 app.get("/profile", (req, res) => {
-    res.render("./profile.ejs", {username: req.user.username, POSTS})
+    res.render("./profile.ejs", {
+        username: req.user.username,
+        firstname: req.user.firstname,
+        lastname: req.user.lastname,
+        email: req.user.email,
+        })
 })
 
 
@@ -120,6 +125,7 @@ app.post("/index", async (req, res) => {
 })
 
 
+
 // Delete the last post
 app.post("/delete", (req, res) => {
     POSTS.pop()
@@ -130,21 +136,21 @@ app.post("/delete", (req, res) => {
 // Edit user information
 app.post("/edit_user", async (req, res) => {
 
-    
+    var query = {"username": req.user.username}
     const {firstname, lastname, email} = req.body;
 
+    console.log(firstname, lastname, email)
 
-        const user = new User({username});
-        await user.setPassword(password);
-        await user.save();
-        res.redirect("/login");
+    // User.update(query, {$set: {firstname : firstname, lastname: lastname, email: email}} );
+    // User.save();
+  
+    User.findOneAndUpdate(query, {$set: {firstname : firstname, lastname: lastname, email: email}}, {new: true}, (err, doc) => {
+        if (err) {
+            console.log("Something wrong when updating data!");
+        }
+        res.redirect("/profile")
+    })
 
-    
-
-
-
-
-    res.redirect("/profile")
 })
 
 

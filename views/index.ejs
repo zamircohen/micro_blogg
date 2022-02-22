@@ -2,7 +2,7 @@
 
         <h1>Welcome to Critter Posts <%= firstname %> </h1>
 
-        <p> You are logged in as: <b><%= username %> </p> </b>
+        <p> You are logged in as: <a href="/profile"><b><%= username %></a></b></p>
 
         <form action="/logout" method="POST">
         <button type="submit">Logout</button><br/>
@@ -12,10 +12,10 @@
 
         <form method="POST">
             <input type="text" name="post_text" maxlength="140" placeholder="What to do?">
-            <button type="submit">To do</button>
+            <button type="submit">Creet</button>
         </form>
 
-        <h1>My Crits</h1>
+        <h1>My Creets</h1>
 
         <ul>
             <% POSTS.forEach((item) => { %>
