@@ -41,6 +41,14 @@ app.use(photo.single("uploaded_file"))
 let POSTS = []
 
 
+// Creating a variable for all the entries
+const entry = new Entries()
+    // {
+    //     post: { type: String, default: "", maxlength: 140},
+    // }
+    // )
+
+
 // Routing
 app.get("/login", (req, res) => {
     res.render("./login.ejs")
@@ -56,14 +64,14 @@ app.get("/update", (req, res) => {
 
 app.get("/index", (req, res) => {
     if (req.user) {
-        res.render("./index.ejs", {username: req.user.username, POSTS});
+        res.render("./index.ejs", {username: req.user.username, firstname:req.user.firstname, POSTS});
     } else {
         res.redirect("/login");
     }
 })
 
-app.get("/profile", (_req, res) => {
-    res.render("/profile.ejs")
+app.get("/profile", (req, res) => {
+    res.render("./profile.ejs", {username: req.user.username, POSTS})
 })
 
 
@@ -71,8 +79,8 @@ app.get("/profile", (_req, res) => {
 // CREATE NEW USER
 
 app.post("/signup", async (req, res) => {
-    const {username, password} = req.body;
-    const user = new User({username});
+    const {username, password, firstname, lastname, email} = req.body;
+    const user = new User({username, firstname, lastname, email});
     await user.setPassword(password);
     await user.save();
     res.redirect("/login");
@@ -97,15 +105,16 @@ app.post("/logout", function(req, res){
 
 
 // Create & submit a critter post
-app.post("/index", (req, res) => {
+app.post("/index", async (req, res) => {
     const { post_text } = req.body   
     const today_date = new Date();
     const date = `${today_date.toLocaleDateString()} at ${today_date.toLocaleTimeString()}`
     POSTS.push({ post_text, date })
 
-    new Entries({ post_text, date})
+    // const entry = new Entries({post_text, date})
+    // await entry.save()
 
-    console.log(Entries)
+    console.log(entry)
 
     res.redirect("/index")
 })
@@ -118,6 +127,25 @@ app.post("/delete", (req, res) => {
 })
 
 
+// Edit user information
+app.post("/edit_user", async (req, res) => {
+
+    
+    const {firstname, lastname, email} = req.body;
+
+
+        const user = new User({username});
+        await user.setPassword(password);
+        await user.save();
+        res.redirect("/login");
+
+    
+
+
+
+
+    res.redirect("/profile")
+})
 
 
 // Upload user photo "function" connected to profile.html

@@ -1,6 +1,34 @@
 <%- include("partials/header.ejs") %>
 
         <h1>User profile</h1>
-        <img src="user_photo/photo.jpg" alt="A user profile photo">
-  
+        <img src="user_photo/photo.jpg" alt="A user profile photo" height="200px" width="100px">
+
+        <h2> Username: <%= username %> </h2>
+        <h3> First name: firstname </h3>
+        <h3> Last name: lastname </h3>
+        <h3> E-mail: email </h3>
+
+        <br/>
+
+        <h1>Edit user profile</h1>
+
+        <h2>Photo upload</h2>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+                <input name="file" type="file">
+                <button type="submit">Upload file</button>
+        </form>
+
+        <form action="/edit_user" method="POST">
+                First name: <input type="text" name="firstname"><br/>
+                <br/>
+                Last name: <input type="text" name="lastname"><br/>
+                <br/>
+                E-mail: <input type="email" name="email"><br/>
+                <br/>
+                <!-- Password: <input type="password" name="password" required><br/>
+                <br/> -->
+                <button type="submit">Edit user</button>
+            </form>
+
+
 <%- include("partials/footer.ejs") %>
