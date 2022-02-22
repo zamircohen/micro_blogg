@@ -4,8 +4,9 @@ const mongoose = require("mongoose")
 const passport = require("passport")
 const session = require("express-session")
 const { User } = require("./models/user")
+const { Entries } = require("./models/entries")
 const multer = require("multer")
-// const path = require("path")
+const path = require("path")
 const bodyParser = require("body-parser")
 // const cookierParser = require("cookie-parser")
 
@@ -13,6 +14,7 @@ const bodyParser = require("body-parser")
 // Basic variables
 const app = express()
 const PORT = 3000
+const photo = multer({ dest: "user_photo" })
 // const VIEWS_ROOT = path.join(__dirname, "views")
 
 
@@ -29,22 +31,20 @@ app.use(session({
 app.use(passport.authenticate("session"));
 
 app.use(bodyParser.urlencoded({extended: true}))
+
+app.use(photo.single("uploaded_file"))
+
 // app.use(cookierParser())
 
 
 // Program variables
 let POSTS = []
-const upload_photo = multer({dest: "user_photo" })
 
 
 // Routing
 app.get("/login", (req, res) => {
     res.render("./login.ejs")
 })
-
-// app.get("/posts", (req, res) => {
-//     res.render("./posts.ejs")
-// })
 
 app.get("/signup", (req, res) => {
     res.render("./signup.ejs")
@@ -54,13 +54,18 @@ app.get("/update", (req, res) => {
     res.render("./update.ejs")
 })
 
-app.get("/posts", (req, res) => {
+app.get("/index", (req, res) => {
     if (req.user) {
-        res.render("./posts.ejs", {username: req.user.username, POSTS});
+        res.render("./index.ejs", {username: req.user.username, POSTS});
     } else {
         res.redirect("/login");
     }
-});
+})
+
+app.get("/profile", (_req, res) => {
+    res.render("/profile.ejs")
+})
+
 
 
 // CREATE NEW USER
@@ -78,38 +83,47 @@ app.post("/signup", async (req, res) => {
 // The main page
 
 app.post("/login", passport.authenticate("local", {
-    successRedirect: "/posts"
+    successRedirect: "/index"
 }))
 
 
 
+// Logout function
+app.post("/logout", function(req, res){
+    req.logout();
+    res.redirect("/login");
+})
+
+
+
 // Create & submit a critter post
-app.post("/posts", (req, res) => {
+app.post("/index", (req, res) => {
     const { post_text } = req.body   
     const today_date = new Date();
     const date = `${today_date.toLocaleDateString()} at ${today_date.toLocaleTimeString()}`
     POSTS.push({ post_text, date })
-    // console.log(POSTS)
-    res.redirect("/posts")
+
+    new Entries({ post_text, date})
+
+    console.log(Entries)
+
+    res.redirect("/index")
 })
 
 
 // Delete the last post
 app.post("/delete", (req, res) => {
     POSTS.pop()
-    res.redirect("/posts")
+    res.redirect("/index")
 })
 
 
 
 
 // Upload user photo "function" connected to profile.html
-app.use(upload_photo.single("file"))
-
-
-// app.post("/upload", (_req, res) => {
-//     res.redirect("./profile.html", {root: VIEWS_ROOT })
-// })
+app.post("/upload", (req, res) => {
+    res.redirect("/profile")
+})
 
 
 

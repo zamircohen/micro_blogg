@@ -4,6 +4,12 @@
 
         <p> You are logged in as: <b><%= username %> </p> </b>
 
+        <form action="/logout" method="POST">
+        <button type="submit">Logout</button><br/>
+        </form>    
+
+        <br/>
+
         <form method="POST">
             <input type="text" name="post_text" maxlength="140" placeholder="What to do?">
             <button type="submit">To do</button>
@@ -19,10 +25,8 @@
             <% }) %>
         </ul>
 
-
         <form action="/delete" method="POST">
             <button type="submit">Delete last post</button>
         </form>
-
 
 <%- include("partials/footer.ejs") %>
