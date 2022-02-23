@@ -19,8 +19,6 @@ const PORT = 3000
 const upload = multer({ dest: "user_photo" })
 
 
-
-
 // const VIEWS_ROOT = path.join(__dirname, "views")
 
 
@@ -39,6 +37,19 @@ app.use(passport.authenticate("session"));
 app.use(bodyParser.urlencoded({extended: true}))
 
 app.use(upload.single("file"))
+
+
+//OUR OWN MIDDLEWARE - IS A USER LOGGED IN?
+const requireLogin = (req, res, next) => {  // Vi skapar en egen middleware "requireLogin" - Om req.user = true så går man till nästa steg, annars skciakr vi fel meddelande
+    if (req.user) {
+        next()
+    } else {
+        res.sendStatus(401)
+    }
+}
+
+
+
 
 // app.use(cookierParser())
 
@@ -64,7 +75,7 @@ app.get("/signup", (req, res) => {
     res.render("./signup.ejs")
 })
 
-app.get("/index", (req, res) => {
+app.get("/index", requireLogin, (req, res) => {
     if (req.user) {
         res.render("./index.ejs", {username: req.user.username, firstname:req.user.firstname, POSTS});
     } else {
@@ -72,7 +83,7 @@ app.get("/index", (req, res) => {
     }
 })
 
-app.get("/profile", (req, res) => {
+app.get("/profile", requireLogin, (req, res) => {
     res.render("./profile.ejs", {
         username: req.user.username,
         firstname: req.user.firstname,
@@ -80,6 +91,8 @@ app.get("/profile", (req, res) => {
         email: req.user.email,
         })
 })
+
+
 
 
 
