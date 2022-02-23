@@ -5,16 +5,22 @@ const passport = require("passport")
 const session = require("express-session")
 const { User } = require("./models/user")
 const { Entries } = require("./models/entries")
-const multer = require("multer")
 const path = require("path")
 const bodyParser = require("body-parser")
+const multer = require("multer")
+
 // const cookierParser = require("cookie-parser")
 
 
 // Basic variables
 const app = express()
 const PORT = 3000
-const photo = multer({ dest: "user_photo" })
+
+const upload = multer({ dest: "user_photo" })
+
+
+
+
 // const VIEWS_ROOT = path.join(__dirname, "views")
 
 
@@ -32,7 +38,7 @@ app.use(passport.authenticate("session"));
 
 app.use(bodyParser.urlencoded({extended: true}))
 
-app.use(photo.single("uploaded_file"))
+app.use(upload.single("file"))
 
 // app.use(cookierParser())
 
@@ -57,10 +63,6 @@ app.get("/login", (req, res) => {
 app.get("/signup", (req, res) => {
     res.render("./signup.ejs")
 })
-
-// app.get("/update", (req, res) => {
-//     res.render("./update.ejs")
-// })
 
 app.get("/index", (req, res) => {
     if (req.user) {
