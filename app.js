@@ -58,13 +58,6 @@ const requireLogin = (req, res, next) => {  // Vi skapar en egen middleware "req
 let POSTS = []
 
 
-// Creating a variable for all the entries
-const entry = new Entries()
-    // {
-    //     post: { type: String, default: "", maxlength: 140},
-    // }
-    // )
-
 
 // Routing
 app.get("/login", (req, res) => {
@@ -125,17 +118,33 @@ app.post("/logout", function(req, res){
 
 
 // Create & submit a critter post
-app.post("/index", async (req, res) => {
-    const { post_text } = req.body   
-    const today_date = new Date();
-    const date = `${today_date.toLocaleDateString()} at ${today_date.toLocaleTimeString()}`
-    POSTS.push({ post_text, date })
+app.post("/index", (req, res) => {
 
+    const entryBy = req.user.username
+    const { entry } = req.body   
+    const entryDate = new Date();
+    const dateString = `${entryDate.toLocaleDateString()} at ${entryDate.toLocaleTimeString()}`
+    POSTS.push({ entry, dateString })
+
+
+    const entryId = 55
+    // const entryBy = "Zamir"
+    // const entryData = { entry, entryId, entryBy, entryDate }
+    
+    const newEntry = new Entries({entry, entryDate, entryBy, entryId})
+    newEntry.save()
+
+    // Entries.push(entryData)
     // const entry = new Entries({post_text, date})
     // await entry.save()
+    // console.log(newEntry)
+    // console.log(entryId)
+    // console.log(entryData)
 
-    console.log(entry)
-
+    // console.log(entry)
+    // console.log(entryId)
+    // console.log(entryBy)
+    
     res.redirect("/index")
 })
 

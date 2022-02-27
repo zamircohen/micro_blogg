@@ -1,13 +1,13 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 const passportLocalMongoose = require("passport-local-mongoose");
 
 const entriesSchema = new mongoose.Schema(
     {
-        entry: String, 
+        entry: String,
+        entryDate: Date,
         entryBy: String,
-        entryDate: {type: Date, default: Date.now}
-});
-
+        entryId: Number
+    })
 
 entriesSchema.plugin(passportLocalMongoose);
 

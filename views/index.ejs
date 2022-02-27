@@ -11,7 +11,7 @@
         <br/>
 
         <form method="POST">
-            <input type="text" name="post_text" maxlength="140" placeholder="What to do?">
+            <input type="text" name="entry" maxlength="140" placeholder="What to do?">
             <button type="submit">Creet</button>
         </form>
 
@@ -20,7 +20,7 @@
         <ul>
             <% POSTS.forEach((item) => { %>
             <li> 
-                <%= item.post_text%> <i><small>- posted on <%= item.date %> </small></i>
+                <%= item.entry%> <i><small>- posted on <%= item.dateString %> </small></i>
             </li>
             <% }) %>
         </ul>
