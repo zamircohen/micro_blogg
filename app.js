@@ -4,7 +4,7 @@ const mongoose = require("mongoose")
 const passport = require("passport")
 const session = require("express-session")
 const { User } = require("./models/user")
-const { Entries } = require("./models/entries")
+const { Post } = require("./models/post")
 const path = require("path")
 const bodyParser = require("body-parser")
 const multer = require("multer")
@@ -49,13 +49,11 @@ const requireLogin = (req, res, next) => {  // Vi skapar en egen middleware "req
 }
 
 
-
-
 // app.use(cookierParser())
 
 
 // Program variables
-let POSTS = []
+// let POSTS = []
 
 
 
@@ -68,9 +66,12 @@ app.get("/signup", (req, res) => {
     res.render("./signup.ejs")
 })
 
-app.get("/index", requireLogin, (req, res) => {
+app.get("/index", requireLogin, async (req, res) => {
+    
+    const entries = await Post.find()
+
     if (req.user) {
-        res.render("./index.ejs", {username: req.user.username, firstname:req.user.firstname, POSTS});
+        res.render("./index.ejs", {username: req.user.username, firstname:req.user.firstname, entries});
     } else {
         res.redirect("/login");
     }
@@ -118,43 +119,26 @@ app.post("/logout", function(req, res){
 
 
 // Create & submit a critter post
-app.post("/index", (req, res) => {
+app.post("/entries", async (req, res) => {
 
-    const entryBy = req.user.username
+    const entryUser = req.user.username
     const { entry } = req.body   
     const entryDate = new Date();
-    const dateString = `${entryDate.toLocaleDateString()} at ${entryDate.toLocaleTimeString()}`
-    POSTS.push({ entry, dateString })
+    const entryDateString = `${entryDate.toLocaleDateString()} at ${entryDate.toLocaleTimeString()}`
 
-
-    const entryId = 55
-    // const entryBy = "Zamir"
-    // const entryData = { entry, entryId, entryBy, entryDate }
-    
-    const newEntry = new Entries({entry, entryDate, entryBy, entryId})
-    newEntry.save()
-
-    // Entries.push(entryData)
-    // const entry = new Entries({post_text, date})
-    // await entry.save()
-    // console.log(newEntry)
-    // console.log(entryId)
-    // console.log(entryData)
-
-    // console.log(entry)
-    // console.log(entryId)
-    // console.log(entryBy)
-    
+    const newEntry = new Post({ entry, entryDate, entryUser, entryDateString })
+    await newEntry.save()
     res.redirect("/index")
 })
+
 
 
 
 // Delete the last post
-app.post("/delete", (req, res) => {
-    POSTS.pop()
-    res.redirect("/index")
-})
+// app.post("/delete", (req, res) => {
+//     POSTS.pop()
+//     res.redirect("/index")
+// })
 
 
 // Edit user information
@@ -186,7 +170,8 @@ app.post("/upload", (req, res) => {
 
 
 // Connections
-mongoose.connect("mongodb://localhost/backend1")
+mongoose.connect("mongodb://localhost/backend1").then(console.log("mongodb connected"))
+
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`)
 })

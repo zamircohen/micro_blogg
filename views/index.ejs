@@ -10,7 +10,7 @@
 
         <br/>
 
-        <form method="POST">
+        <form method="POST" action="/entries">
             <input type="text" name="entry" maxlength="140" placeholder="What to do?">
             <button type="submit">Creet</button>
         </form>
@@ -18,9 +18,9 @@
         <h1>My Creets</h1>
 
         <ul>
-            <% POSTS.forEach((item) => { %>
+            <% entries.forEach((item) => { %>
             <li> 
-                <%= item.entry%> <i><small>- posted on <%= item.dateString %> </small></i>
+                <%= item.entry%> <i><small>- posted by <%= item.entryUser %> on <%= item.entryDateString %> </small></i>
             </li>
             <% }) %>
         </ul>
@@ -28,5 +28,6 @@
         <form action="/delete" method="POST">
             <button type="submit">Delete last post</button>
         </form>
+
 
 <%- include("partials/footer.ejs") %>
