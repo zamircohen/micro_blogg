@@ -86,7 +86,6 @@ app.get("/profile", requireLogin, (req, res) => {
 
 
 
-
 // CREATE NEW USER
 
 app.post("/signup", async (req, res) => {

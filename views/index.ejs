@@ -1,6 +1,6 @@
 <%- include("partials/header.ejs") %>
 
-        <h1>Welcome to Critter Posts <%= firstname %> </h1>
+        <h1>Welcome to Cricket <%= firstname %> </h1>
 
         <p> You are logged in as: <a href="/profile"><b><%= username %></a></b></p>
 
@@ -20,6 +20,7 @@
         <ul>
             <% entries.forEach((item) => { %>
             <li> 
+                <img src="/images/worldmap1.jpg" alt="profile photo" height="50px" width="50px">
                 <%= item.entry%> <i><small>- posted by <b><%= item.entryUser %></b> on <%= item.entryDateString %> </small></i>
             </li>
             <% }) %>
