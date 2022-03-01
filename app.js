@@ -19,9 +19,6 @@ const PORT = 3000
 const upload = multer({ dest: "user_photo" })
 
 
-
-
-
 // Middlewares
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
@@ -38,7 +35,9 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 app.use(upload.single("file"))
 
-app.use(express.static(__dirname + "/user_photo"))
+// app.use(express.static(__dirname + "/user_photo"))
+app.use(express.static("public"))
+app.use(express.static("files"))
 
 
 //OUR OWN MIDDLEWARE - IS A USER LOGGED IN?
