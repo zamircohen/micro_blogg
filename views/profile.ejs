@@ -33,4 +33,23 @@
             </form>
 
 
+            <h1>My Creets</h1>
+
+        <ul>
+            <% entries.forEach((item) => { %>
+
+                <% if (item.entryUser === username) { %>
+
+            <li> 
+                <img src="/images/worldmap1.jpg" alt="profile photo" height="50px" width="50px">
+                <%= item.entry%> <i><small>- posted by <b><%= item.entryUser %></b> on <%= item.entryDateString %> </small></i>
+            </li>
+
+            <% } %>
+
+            
+            <% }) %>
+        </ul>
+
+
 <%- include("partials/footer.ejs") %>

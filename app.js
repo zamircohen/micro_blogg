@@ -68,19 +68,32 @@ app.get("/index", requireLogin, async (req, res) => {
     const entries = await Post.find()
 
     if (req.user) {
-        res.render("./index.ejs", {username: req.user.username, firstname:req.user.firstname, entries});
+        res.render("./index.ejs", {
+            username: req.user.username, 
+            firstname:req.user.firstname, 
+            entries});
     } else {
         res.redirect("/login");
     }
 })
 
-app.get("/profile", requireLogin, (req, res) => {
+app.get("/profile", requireLogin, async (req, res) => {
+
+    const entries = await Post.find()
+    const userId = req.user.id; 
+    const ObjectId = require("mongoose").Types.ObjectId;
+
     res.render("./profile.ejs", {
         username: req.user.username,
         firstname: req.user.firstname,
         lastname: req.user.lastname,
         email: req.user.email,
+        entries
         })
+
+    console.log(ObjectId)
+    console.log(userId)
+    console.log(entries)
 })
 
 
