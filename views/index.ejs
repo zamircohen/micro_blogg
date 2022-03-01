@@ -20,14 +20,10 @@
         <ul>
             <% entries.forEach((item) => { %>
             <li> 
-                <%= item.entry%> <i><small>- posted by <%= item.entryUser %> on <%= item.entryDateString %> </small></i>
+                <%= item.entry%> <i><small>- posted by <b><%= item.entryUser %></b> on <%= item.entryDateString %> </small></i>
             </li>
             <% }) %>
         </ul>
-
-        <form action="/delete" method="POST">
-            <button type="submit">Delete last post</button>
-        </form>
 
 
 <%- include("partials/footer.ejs") %>

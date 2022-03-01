@@ -19,7 +19,7 @@ const PORT = 3000
 const upload = multer({ dest: "user_photo" })
 
 
-// const VIEWS_ROOT = path.join(__dirname, "views")
+
 
 
 // Middlewares
@@ -38,6 +38,8 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 app.use(upload.single("file"))
 
+app.use(express.static(__dirname + "/user_photo"))
+
 
 //OUR OWN MIDDLEWARE - IS A USER LOGGED IN?
 const requireLogin = (req, res, next) => {  // Vi skapar en egen middleware "requireLogin" - Om req.user = true så går man till nästa steg, annars skciakr vi fel meddelande
@@ -50,10 +52,6 @@ const requireLogin = (req, res, next) => {  // Vi skapar en egen middleware "req
 
 
 // app.use(cookierParser())
-
-
-// Program variables
-// let POSTS = []
 
 
 
@@ -133,14 +131,6 @@ app.post("/entries", async (req, res) => {
 
 
 
-
-// Delete the last post
-// app.post("/delete", (req, res) => {
-//     POSTS.pop()
-//     res.redirect("/index")
-// })
-
-
 // Edit user information
 app.post("/edit_user", async (req, res) => {
 
@@ -148,10 +138,7 @@ app.post("/edit_user", async (req, res) => {
     const {firstname, lastname, email} = req.body;
 
     console.log(firstname, lastname, email)
-
-    // User.update(query, {$set: {firstname : firstname, lastname: lastname, email: email}} );
-    // User.save();
-  
+ 
     User.findOneAndUpdate(query, {$set: {firstname : firstname, lastname: lastname, email: email}}, {new: true}, (err, doc) => {
         if (err) {
             console.log("Something wrong when updating data!");
@@ -164,6 +151,7 @@ app.post("/edit_user", async (req, res) => {
 
 // Upload user photo "function" connected to profile.html
 app.post("/upload", (req, res) => {
+    
     res.redirect("/profile")
 })
 
