@@ -21,7 +21,7 @@ const PORT = 3000
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'user_photo/')
+      cb(null, 'public/user_photo/')
     },
     filename: function (req, file, cb) {
       cb(null, Date.now() + path.extname(file.originalname))
@@ -55,7 +55,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 // app.use(express.static(__dirname + "/user_photo"))
 app.use(express.static("public"))
 app.use(express.static("files"))
-app.use(express.static("user_photo"))
+app.use(express.static("public/user_photo"))
 app.use(upload.single("file"))
 
 
@@ -91,7 +91,8 @@ app.get("/signup", (req, res) => {
 
 app.get("/index", requireLogin, async (req, res) => {
     
-    const entries = await Post.find()
+    var mysort = { entryDate: -1 };
+    const entries = await Post.find().sort(mysort)
 
     if (req.user) {
         res.render("./index.ejs", {
