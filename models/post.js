@@ -5,7 +5,8 @@ const postSchema = new mongoose.Schema(
         entry: String,
         entryDate: Date,
         entryUser: String,
-        entryDateString: String
+        entryDateString: String,
+        entryPhoto: String 
     })
 
 

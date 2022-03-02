@@ -19,7 +19,20 @@ const PORT = 3000
 
 // UPLOAD PHOTO FUNCTION 
 
-const upload = multer({ dest: "user_photo" })
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'user_photo/')
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + path.extname(file.originalname))
+    }
+  })
+  
+const upload = multer({ storage: storage });
+
+// const upload = multer({ dest: "user_photo" })
+
+
 
 
 
@@ -39,9 +52,10 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 
 
-app.use(express.static(__dirname + "/user_photo"))
+// app.use(express.static(__dirname + "/user_photo"))
 app.use(express.static("public"))
 app.use(express.static("files"))
+app.use(express.static("user_photo"))
 app.use(upload.single("file"))
 
 
@@ -57,9 +71,6 @@ const requireLogin = (req, res, next) => {  // Vi skapar en egen middleware "req
 }
 
   
-
-  
-
 
 // app.use(cookierParser())
 
@@ -102,6 +113,7 @@ app.get("/profile", requireLogin, async (req, res) => {
         firstname: req.user.firstname,
         lastname: req.user.lastname,
         email: req.user.email,
+        profilePicture: req.user.profilePicture,
         entries
         })
 })
@@ -144,8 +156,9 @@ app.post("/entries", async (req, res) => {
     const { entry } = req.body   
     const entryDate = new Date();
     const entryDateString = `${entryDate.toLocaleDateString()} at ${entryDate.toLocaleTimeString()}`
+    const entryPhoto = req.user.profilePicture
 
-    const newEntry = new Post({ entry, entryDate, entryUser, entryDateString })
+    const newEntry = new Post({ entry, entryDate, entryUser, entryDateString, entryPhoto })
     await newEntry.save()
     res.redirect("/index")
 })
@@ -171,8 +184,13 @@ app.post("/edit_user", async (req, res) => {
 
 
 // Upload user photo "function" connected to profile.html
-app.post("/upload", (req, res) => {
+app.post("/upload", async (req, res) => {
     
+    const user = req.user
+
+    user.profilePicture = req.file.filename
+    await user.save()
+
     res.redirect("/profile")
 })
 

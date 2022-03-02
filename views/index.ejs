@@ -20,7 +20,7 @@
         <ul>
             <% entries.forEach((item) => { %>
             <li> 
-                <img src="/images/worldmap1.jpg" alt="profile photo" height="50px" width="50px">
+                <img src="/<%= item.entryPhoto %>" alt="profile photo" height="50px" width="50px">
                 <%= item.entry%> <i><small>- posted by <b><%= item.entryUser %></b> on <%= item.entryDateString %> </small></i>
             </li>
             <% }) %>
