@@ -66,6 +66,10 @@ const requireLogin = (req, res, next) => {  // Vi skapar en egen middleware "req
 
 
 // Routing
+app.get("/", (req, res) => {
+    res.render("./login.ejs")
+})
+
 app.get("/login", (req, res) => {
     res.render("./login.ejs")
 })
@@ -175,7 +179,7 @@ app.post("/upload", (req, res) => {
 
 
 // Connections
-mongoose.connect("mongodb://localhost/backend1").then(console.log("mongodb connected"))
+mongoose.connect("mongodb://localhost/micro_blogg").then(console.log("mongodb connected"))
 
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`)
