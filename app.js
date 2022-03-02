@@ -9,14 +9,18 @@ const path = require("path")
 const bodyParser = require("body-parser")
 const multer = require("multer")
 
-// const cookierParser = require("cookie-parser")
+// const cookieParser = require("cookie-parser")
 
 
 // Basic variables
 const app = express()
 const PORT = 3000
 
+
+// UPLOAD PHOTO FUNCTION 
+
 const upload = multer({ dest: "user_photo" })
+
 
 
 // Middlewares
@@ -33,11 +37,14 @@ app.use(passport.authenticate("session"));
 
 app.use(bodyParser.urlencoded({extended: true}))
 
-app.use(upload.single("file"))
 
-// app.use(express.static(__dirname + "/user_photo"))
+
+app.use(express.static(__dirname + "/user_photo"))
 app.use(express.static("public"))
 app.use(express.static("files"))
+app.use(upload.single("file"))
+
+
 
 
 //OUR OWN MIDDLEWARE - IS A USER LOGGED IN?
@@ -48,6 +55,10 @@ const requireLogin = (req, res, next) => {  // Vi skapar en egen middleware "req
         res.sendStatus(401)
     }
 }
+
+  
+
+  
 
 
 // app.use(cookierParser())
@@ -79,9 +90,8 @@ app.get("/index", requireLogin, async (req, res) => {
 
 app.get("/profile", requireLogin, async (req, res) => {
 
-    const entries = await Post.find()
-    const userId = req.user.id; 
-    const ObjectId = require("mongoose").Types.ObjectId;
+    var mysort = { entryDate: -1 };
+    const entries = await Post.find().sort(mysort)
 
     res.render("./profile.ejs", {
         username: req.user.username,
@@ -90,10 +100,6 @@ app.get("/profile", requireLogin, async (req, res) => {
         email: req.user.email,
         entries
         })
-
-    console.log(ObjectId)
-    console.log(userId)
-    console.log(entries)
 })
 
 
