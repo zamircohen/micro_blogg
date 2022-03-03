@@ -14,26 +14,8 @@
         <input action="/index" type="submit" value="Back">
         </form>                
 
-        <h1>Edit user profile</h1>
 
-        <h2>Photo upload</h2>
-        <form action="/upload" method="POST" enctype="multipart/form-data">
-                <input name="file" type="file">
-                <button type="submit">Upload file</button>
-        </form>
-
-        <form action="/edit_user" method="POST">
-                First name: <input type="text" name="firstname"><br/>
-                <br/>
-                Last name: <input type="text" name="lastname"><br/>
-                <br/>
-                E-mail: <input type="email" name="email"><br/>
-                <br/>
-                <button type="submit">Edit user</button>
-            </form>
-
-
-            <h1>My Creets</h1>
+            <h1>Creets</h1>
 
         <ul>
             <% entries.forEach((item) => { %>

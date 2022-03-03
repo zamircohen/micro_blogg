@@ -98,7 +98,8 @@ app.get("/index", requireLogin, async (req, res) => {
         res.render("./index.ejs", {
             username: req.user.username, 
             firstname:req.user.firstname, 
-            entries});
+            entries
+            });
     } else {
         res.redirect("/login");
     }
@@ -115,8 +116,14 @@ app.get("/profile", requireLogin, async (req, res) => {
         lastname: req.user.lastname,
         email: req.user.email,
         profilePicture: req.user.profilePicture,
+        entryPhoto: req.user.profilePicture,
         entries
         })
+})
+
+app.get("/critter/:id", (req, res) => {
+    const id = parseInt(req.params.id)
+    
 })
 
 
