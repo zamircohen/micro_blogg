@@ -70,10 +70,6 @@ const requireLogin = (req, res, next) => {  // Vi skapar en egen middleware "req
     }
 }
 
-  
-
-// app.use(cookierParser())
-
 
 
 // Routing
@@ -97,7 +93,7 @@ app.get("/index", requireLogin, async (req, res) => {
     if (req.user) {
         res.render("./index.ejs", {
             username: req.user.username, 
-            firstname:req.user.firstname, 
+            firstname: req.user.firstname, 
             entries
             });
     } else {
@@ -121,9 +117,55 @@ app.get("/profile", requireLogin, async (req, res) => {
         })
 })
 
-app.get("/critter/:id", (req, res) => {
-    const id = parseInt(req.params.id)
+
+
+app.get("/users/:userId", async (req, res) => {
     
+    
+    // const userId = req.params.userId
+    // const entryUser = Post.find((post) => post.entryUser === userId)
+
+    const userPosts = await Post.find({ entryUser: req.params.userId })
+    res.render("user.ejs", { userPosts })
+    
+    console.log(req.session.user)
+    console.log(userPosts)
+
+    // if (entryUser) {
+    //     res.render("./user.ejs", {
+    //          entryUser 
+    //     })
+    // } else {
+    //     res.status(404).send(`<h1>Not found</h1>`)    
+    // }
+
+
+    // const user = User.find((user) => user.username === userId)
+   
+    // if (user) {
+    //     res.render("user.ejs", 
+    //     { entryUser: user.entryUser})
+    // } else {
+    //     res.status(404).send(`<h1>Not found</h1>`)
+    // }
+})
+
+
+
+app.get("/hashtags", (req, res) => {
+
+    const entries = Post.find()
+
+        var regex = /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm;
+        var matches = [];
+        var match;
+    
+        while ((match = regex.exec(entries.entry))) {
+            matches.push(match[1]);
+        }
+        return matches
+    
+    res.render("./hashtags.ejs", matches)
 })
 
 

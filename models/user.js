@@ -9,7 +9,6 @@ const userSchema = new mongoose.Schema({
     email: {type: String},
     profilePicture: {type: String, default: "avatar.png"}
     }
-
   );
 
 
