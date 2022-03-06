@@ -1,9 +1,9 @@
 <%- include("partials/header.ejs") %>
 
         <h2> Username: <%= userPosts[0].entryUser %> </h2>
-        <h3> First name: <%= userPosts[0].entryUser %> </h2>
-        <h3> Last name: <%= userPosts[0].entryUser %> </h2>
-        <h3> E-mail: <%= userPosts[0].entryUser %> </h2>
+        <h3> First name: <%= userPosts[0].entryFirstname %> </h3>
+        <h3> Last name: <%= userPosts[0].entryLastname %> </h3>
+        <h3> E-mail: <%= userPosts[0].entryEmail %> </h3>
 
         <br/>
 
@@ -13,11 +13,8 @@
                     <img src="/<%= item.entryPhoto %>" alt="profile photo" height="50px" width="50px">
                     <%= item.entry%> <i><small>- posted on <%= item.entryDateString %> </small></i>
                 </li>
-                <% } %>  
                 <% }) %>
             </ul>
 
-
-     
 
 <%- include("partials/footer.ejs") %>

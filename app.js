@@ -203,12 +203,15 @@ app.post("/logout", function(req, res){
 app.post("/entries", async (req, res) => {
 
     const entryUser = req.user.username
+    const entryFirstname = req.user.firstname
+    const entryLastname = req.user.lastname
+    const entryEmail = req.user.email
     const { entry } = req.body   
     const entryDate = new Date();
     const entryDateString = `${entryDate.toLocaleDateString()} at ${entryDate.toLocaleTimeString()}`
     const entryPhoto = req.user.profilePicture
 
-    const newEntry = new Post({ entry, entryDate, entryUser, entryDateString, entryPhoto })
+    const newEntry = new Post({ entry, entryDate, entryUser, entryDateString, entryPhoto, entryFirstname, entryLastname, entryEmail })
     await newEntry.save()
     res.redirect("/index")
 })

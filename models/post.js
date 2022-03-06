@@ -6,7 +6,10 @@ const postSchema = new mongoose.Schema(
         entryDate: Date,
         entryUser: String,
         entryDateString: String,
-        entryPhoto: String 
+        entryPhoto: String,
+        entryFirstname: String,
+        entryLastname: String,
+        entryEmail: String
     })
 
 
