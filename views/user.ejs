@@ -1,20 +1,30 @@
 <%- include("partials/header.ejs") %>
 
-        <h2> Username: <%= userPosts[0].entryUser %> </h2>
-        <h3> First name: <%= userPosts[0].entryFirstname %> </h3>
-        <h3> Last name: <%= userPosts[0].entryLastname %> </h3>
-        <h3> E-mail: <%= userPosts[0].entryEmail %> </h3>
+
+<img src="/<%= userPosts[userPosts.length-1].entryPhoto %>" alt="A user profile photo" height="200px" width="200px" border-radius="50%">
+
+        <h2> Username: <%= userPosts[userPosts.length-1].entryUser %> </h2>
+        <h3> First name: <%= userPosts[userPosts.length-1].entryFirstname %> </h3>
+        <h3> Last name: <%= userPosts[userPosts.length-1].entryLastname %> </h3>
+        <h3> E-mail: <%= userPosts[userPosts.length-1].entryEmail %> </h3>
 
         <br/>
+
+        <button onclick="history.back()">Go Back</button>
+
+        <br/>
+
+        <h2> <%= userPosts[userPosts.length-1].entryUser%>´s creets</h2>
 
         <ul>
                 <% userPosts.forEach((item) => { %>
                 <li> 
-                    <img src="/<%= item.entryPhoto %>" alt="profile photo" height="50px" width="50px">
                     <%= item.entry%> <i><small>- posted on <%= item.entryDateString %> </small></i>
                 </li>
                 <% }) %>
-            </ul>
+        </ul>
+
+        
 
 
 <%- include("partials/footer.ejs") %>

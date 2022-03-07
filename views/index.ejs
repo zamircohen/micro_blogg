@@ -20,7 +20,7 @@
         <ul>
             <% entries.forEach((item) => { %>
             <li> 
-                <img src="/<%= item.entryPhoto %>" alt="profile photo" height="50px" width="50px">
+                <a href="/users/<%= item.entryUser%>"><img src="/<%= item.entryPhoto %>" alt="profile photo" height="50px" width="50px"></a>
                 <%= item.entry%> <i><small>- posted by <a href="/users/<%= item.entryUser%>"><b><%= item.entryUser %></b></a> on <%= item.entryDateString %> </small></i>
             </li>
             <% }) %>

@@ -128,8 +128,6 @@ app.get("/users/:userId", async (req, res) => {
     const userPosts = await Post.find({ entryUser: req.params.userId })
     res.render("user.ejs", { userPosts })
     
-    console.log(req.session.user)
-    console.log(userPosts)
 
     // if (entryUser) {
     //     res.render("./user.ejs", {
