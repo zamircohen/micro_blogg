@@ -2,8 +2,10 @@
 
         <h1>Welcome to Cricket <%= firstname %> </h1>
 
-        <p> You are logged in as: <a href="/profile"><b><%= username %></a></b></p>
+        <p> You are logged in as: <b><%= username %></b></p>
+        <a href="/profile"><button>Edit user</button></a><br/>
 
+        <br>
         <form action="/logout" method="POST">
         <button type="submit">Logout</button><br/>
         </form>    
