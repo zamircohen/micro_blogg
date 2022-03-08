@@ -1,5 +1,7 @@
 <%- include("partials/header.ejs") %>
 
+    <div class="background">
+        <div class="navbar">
         <h1>Welcome to Cricket <%= firstname %> </h1>
 
         <p> You are logged in as: <b><%= username %></b></p>
@@ -16,17 +18,19 @@
             <input type="text" name="entry" maxlength="140" placeholder="What to do?">
             <button type="submit">Creet</button>
         </form>
+        <br>
+        </div>
 
         <h1>My Creets</h1>
 
         <ul>
             <% entries.forEach((item) => { %>
-            <li> 
+            <li class="post"> 
                 <a href="/users/<%= item.entryUser%>"><img src="/<%= item.entryPhoto %>" alt="profile photo" height="50px" width="50px"></a>
-                <%= item.entry%> <i><small>- posted by <a href="/users/<%= item.entryUser%>"><b><%= item.entryUser %></b></a> on <%= item.entryDateString %> </small></i>
+                <%= item.entry%> <i><small> - posted by <a href="/users/<%= item.entryUser%>"><b><%= item.entryUser %></b></a> on <%= item.entryDateString %> </small></i>
             </li>
             <% }) %>
         </ul>
-
-
+     
+    </div>
 <%- include("partials/footer.ejs") %>

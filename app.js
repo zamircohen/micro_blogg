@@ -8,8 +8,8 @@ const { Post } = require("./models/post")
 const path = require("path")
 const bodyParser = require("body-parser")
 const multer = require("multer")
+const jsdom = require("jsdom")
 
-// const cookieParser = require("cookie-parser")
 
 
 // Basic variables
@@ -29,9 +29,6 @@ var storage = multer.diskStorage({
   })
   
 const upload = multer({ storage: storage });
-
-// const upload = multer({ dest: "user_photo" })
-
 
 
 
@@ -81,6 +78,13 @@ app.get("/login", (req, res) => {
     res.render("./login.ejs")
 })
 
+app.get("/posts", async (req, res) => {
+
+    var mysort = { entryDate: -1 };
+    const entries = await Post.find().sort(mysort)
+    res.render("./posts.ejs", {entries})
+})
+
 app.get("/signup", (req, res) => {
     res.render("./signup.ejs")
 })
@@ -120,32 +124,9 @@ app.get("/profile", requireLogin, async (req, res) => {
 
 
 app.get("/users/:userId", async (req, res) => {
-    
-    
-    // const userId = req.params.userId
-    // const entryUser = Post.find((post) => post.entryUser === userId)
-
+     
     const userPosts = await Post.find({ entryUser: req.params.userId })
     res.render("user.ejs", { userPosts })
-    
-
-    // if (entryUser) {
-    //     res.render("./user.ejs", {
-    //          entryUser 
-    //     })
-    // } else {
-    //     res.status(404).send(`<h1>Not found</h1>`)    
-    // }
-
-
-    // const user = User.find((user) => user.username === userId)
-   
-    // if (user) {
-    //     res.render("user.ejs", 
-    //     { entryUser: user.entryUser})
-    // } else {
-    //     res.status(404).send(`<h1>Not found</h1>`)
-    // }
 })
 
 
@@ -247,9 +228,35 @@ app.post("/upload", async (req, res) => {
 
 
 
+app.post("/users/:userId", (req, res) => {
+    
+    const following = req.user.following
+    const newFollow = req.params.username
+    const loggedUser = req.user.username
+    
+    console.log(following)
+    console.log(newFollow)
+    console.log(loggedUser)
+
+    following.push(newFollow)
+
+    console.log(following)
+
+    res.redirect(`/users/${newFollow}`)
+    // res.redirect("/index")
+
+
+})
+
+
+
+
+
 // Connections
 mongoose.connect("mongodb://localhost/micro_blogg").then(console.log("mongodb connected"))
 
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`)
 })
+
+

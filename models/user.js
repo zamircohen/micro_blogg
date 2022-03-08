@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
     firstname: {type: String},
     lastname: {type: String},
     email: {type: String},
-    profilePicture: {type: String, default: "avatar.png"}
+    profilePicture: {type: String, default: "avatar.png"},
+    following: {type: Array, 'default': []}
     }
   );
 
