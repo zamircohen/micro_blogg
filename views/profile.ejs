@@ -1,5 +1,7 @@
 <%- include("partials/header.ejs") %>
 
+    <div class="background">
+        <div class="navbar">
         <h1>User profile</h1>
         <img src="/<%= profilePicture %>" alt="A user profile photo" height="200px" width="200px" border-radius="50%">
 
@@ -7,7 +9,7 @@
         <h3> First name: <%= firstname %> </h3>
         <h3> Last name: <%= lastname %> </h3>
         <h3> E-mail: <%= email %> </h3>
-
+        <h3> Following <%= following.length%> other user(s) </h3>
         <br/>
         
         <button onclick="history.back()">Go Back</button>
@@ -30,18 +32,20 @@
                 <button type="submit">Edit user</button>
             </form>
 
-
             <h1>My Creets</h1>
+
 
         <ul>
             <% entries.forEach((item) => { %>
                 <% if (item.entryUser === username) { %>
-            <li> 
+            <li class="posts"> 
                 <img src="/<%= item.entryPhoto %>" alt="profile photo" height="50px" width="50px">
                 <%= item.entry%> <i><small>- posted on <%= item.entryDateString %> </small></i>
             </li>
             <% } %>  
             <% }) %>
         </ul>
+        </div>
+    </div>
 
 <%- include("partials/footer.ejs") %>
