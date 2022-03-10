@@ -238,26 +238,38 @@ app.post("/users/:userId", async (req, res) => {
     const following = req.user.following
     const newFollow = req.params.userId
     const loggedUser = req.user.username 
-    // const followed = newFollow[username]
         
     allFollowers.push(newFollow)
-
-    console.log(following)
-    console.log(newFollow)
-    console.log(loggedUser)
-    // console.log(`Followed ${followed}`)
-
     following.push(newFollow)
-    // followed = followed + 1
 
     await req.user.save()
-    // await followed.save()
 
     res.redirect(`/users/${newFollow}`)
-    // res.redirect("/index")
-
-
 })
+
+
+
+app.post("/remove/:userId", async (req, res) => {
+    
+    const following = req.user.following
+    const newFollow = req.params.userId
+    const loggedUser = req.user.username 
+        
+    const index = following.indexOf(newFollow)
+
+    if (index > -1 ) {
+        following.splice(index, 1)
+    }
+
+    console.log(following)
+
+    await req.user.save()
+
+    res.redirect(`/users/${newFollow}`)
+})
+
+
+
 
 
 
