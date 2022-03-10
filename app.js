@@ -30,7 +30,7 @@ var storage = multer.diskStorage({
   
 const upload = multer({ storage: storage });
 
-
+let allFollowers = []
 
 
 // Middlewares
@@ -110,6 +110,9 @@ app.get("/profile", requireLogin, async (req, res) => {
     var mysort = { entryDate: -1 };
     const entries = await Post.find().sort(mysort)
 
+    const followers = allFollowers.filter(x => x == req.user.username).length
+
+  
     res.render("./profile.ejs", {
         username: req.user.username,
         firstname: req.user.firstname,
@@ -118,6 +121,8 @@ app.get("/profile", requireLogin, async (req, res) => {
         profilePicture: req.user.profilePicture,
         entryPhoto: req.user.profilePicture,
         following: req.user.following,
+        allFollowers,
+        followers,
         entries,
         })
 
@@ -235,6 +240,8 @@ app.post("/users/:userId", async (req, res) => {
     const loggedUser = req.user.username 
     // const followed = newFollow[username]
         
+    allFollowers.push(newFollow)
+
     console.log(following)
     console.log(newFollow)
     console.log(loggedUser)
