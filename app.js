@@ -118,8 +118,9 @@ app.get("/profile", requireLogin, async (req, res) => {
         profilePicture: req.user.profilePicture,
         entryPhoto: req.user.profilePicture,
         following: req.user.following,
-        entries
+        entries,
         })
+
 })
 
 app.get("/users/:userId", async (req, res) => {
@@ -231,17 +232,19 @@ app.post("/users/:userId", async (req, res) => {
     
     const following = req.user.following
     const newFollow = req.params.userId
-    const loggedUser = req.user.username
-    
+    const loggedUser = req.user.username 
+    // const followed = newFollow[username]
+        
     console.log(following)
     console.log(newFollow)
     console.log(loggedUser)
+    // console.log(`Followed ${followed}`)
 
     following.push(newFollow)
-    
-    await req.user.save()
+    // followed = followed + 1
 
-    console.log(following)
+    await req.user.save()
+    // await followed.save()
 
     res.redirect(`/users/${newFollow}`)
     // res.redirect("/index")

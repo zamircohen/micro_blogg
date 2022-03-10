@@ -45,6 +45,28 @@
             <% } %>  
             <% }) %>
         </ul>
+
+
+        <h1>Creeters I follow</h1>
+
+        <% following.forEach((user) => { %>
+            <span><h2> <%= user %> </h2></span>
+        <% }) %>
+
+        <h1>...and their posts...</h1>
+
+        <ul>
+            <% entries.forEach(item => { %>
+                <% if (following.includes(item.entryUser)) { %>
+            <li class="posts"> 
+                <img src="/<%= item.entryPhoto %>" alt="profile photo" height="50px" width="50px">
+                <%= item.entry%> <i><small>- posted by <%= item.entryUser %> on <%= item.entryDateString %> </small></i>
+            </li>
+            <% } %>  
+            <% }) %>
+        </ul>
+
+
         </div>
     </div>
 
