@@ -1,30 +1,31 @@
 <%- include("partials/header.ejs") %>
 
-    <div class="login">
-        <h1>Welcome to Cricket</h1>
+    <div class="background">
+        <div class="navbar">
+        <h2>Welcome to Cricket</h2>
 
-        <h2>Create your own account <a href="/signup">here</a>!</h2>
-
-        <br>
+        <h3>Create your own account <a href="/signup">here</a>!</h3>
 
         <button onclick="history.back()">Go Back</button>
 
         <h1>The Latest Creets</h1>
 
-    <!-- <div class="column"> -->
-        <div class="column-middle">
+        </div>
             <ul>
                 <% entries.forEach((item) => { %>
-                <li> 
+                <li class="post"> 
                     <a href="/users/<%= item.entryUser%>"><img src="/<%= item.entryPhoto %>" alt="profile photo" height="50px" width="50px"></a>
-                    <%= item.entry%> <br>
-                    <i><span class="small">- posted by <a href="/users/<%= item.entryUser%>"><b><%= item.entryUser %></b></a> on <%= item.entryDateString %> </span></i>
-                    <hr>
+                    <%= item.entry%> <i><small>- posted by <%= item.entryUser %></b></a> on <%= item.entryDateString %> </small></i>
                 </li>
                 <% }) %>
+
+                <% tags.forEach((item) => { %>
+                    <li class="post"> 
+                        <%= item %> 
+                    </li>
+                    <% }) %>
                 
             </ul>
-        </div>
     </div>
 
 

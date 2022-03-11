@@ -9,7 +9,8 @@ const postSchema = new mongoose.Schema(
         entryPhoto: String,
         entryFirstname: String,
         entryLastname: String,
-        entryEmail: String
+        entryEmail: String,
+        entryHashtag: [{type: String}]
     })
 
 
