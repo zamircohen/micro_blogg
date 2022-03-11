@@ -261,16 +261,20 @@ app.post("/remove/:userId", async (req, res) => {
         following.splice(index, 1)
     }
 
-    console.log(following)
+
+    const index2 = allFollowers.indexOf(newFollow)
+
+    if (index2 > -1 ) {
+        allFollowers.splice(index2, 1)
+    }
+    
+
+
 
     await req.user.save()
 
     res.redirect(`/users/${newFollow}`)
 })
-
-
-
-
 
 
 
