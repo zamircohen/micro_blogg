@@ -127,9 +127,7 @@ app.get("/users/:userId", async (req, res) => {
 
 
 app.get("/hashtags/:tagId", async (req, res) => {
-    
     const tags = await Post.find({ entryHashtag: req.params.tagId }) 
-    
     res.render("hashtags.ejs", { tags })
 })
 
